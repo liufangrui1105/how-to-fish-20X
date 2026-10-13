@@ -5,6 +5,27 @@
 
 ---
 
+## 关于本仓库
+
+本仓库**只包含补丁脚本、分析工具和文档，不包含任何游戏文件**。
+
+| | |
+|---|---|
+| ✅ 仓库里有 | 补丁 / 还原脚本、IL 解析与自检工具、技术分析文档、面向非技术用户的说明 |
+| ❌ 仓库里没有 | `Assembly-CSharp.dll` 等游戏本体程序集 —— 版权属于 Dazed Games，已在 `.gitignore` 中挡住 |
+
+> ### ⚠️ 免责声明
+> 本项目是**非官方的玩家自制工具**，与 Dazed Games 没有任何关联，也未获其授权或认可。
+> 《How to Fish》游戏本体及一切相关资源的所有权利归 Dazed Games 所有。
+> 本仓库仅包含作者自己编写的脚本与工具代码，**不包含、也不授权游戏本体的任何部分**。
+> 修改游戏文件存在风险（动手前请自行备份存档），使用者需自行承担。
+>
+> ### ⚠️ 联机注意
+> 赔率由**开赌场的主机**结算。装了补丁的人当房主时，房间里**所有玩家**都会按修改后的赔率
+> 结算 —— 包括你并不认识的陌生人。请只在**单人游戏**或**与知情好友的私人房间**中使用。
+
+---
+
 ## 本次更新做了什么（v1 → v2）
 
 游戏在 **2026-09-30** 推送了一次内容更新（弓、木桶、瓶子、成就等，`Assembly-CSharp.dll`
@@ -61,10 +82,10 @@
 5. 安装补丁
 6. 校验：文件大小不变 + 相对原版只差 9 个字节 + 重新识别状态为「已打补丁」
 
-本机当前路径（自动查到的就是这个）：
+路径长这样（脚本会自动查找，一般不用你填）：
 
 ```
-E:\SteamLibrary\steamapps\common\How to Fish\How to Fish\How to Fish_Data\Managed\Assembly-CSharp.dll
+<Steam 库>\steamapps\common\How to Fish\How to Fish\How to Fish_Data\Managed\Assembly-CSharp.dll
 ```
 
 要手动指定就加 `-GameDll "完整路径或游戏文件夹"`（文件夹、拖拽格式 `& '...'` 都能识别）。
@@ -132,26 +153,33 @@ Compress-Archive -Path "$share\*" -DestinationPath ".\HowToFish-轮盘赌20x-分
 
 ## 文件说明
 
+**仓库里有的文件：**
+
 | 文件 | 说明 |
 |---|---|
-| `HowToFish-轮盘赌20x-分享包.zip` | **发给别人的成品包**（仅脚本，12 KB） |
-| `分享包-HowToFish轮盘赌20x/` | 上者的解压内容 |
-| `使用说明-给朋友.txt` | 面向非技术用户的说明（也打进分享包） |
 | `安装轮盘赌补丁.cmd` | 双击安装（推荐） |
 | `还原原版赔率.cmd` | 双击还原 |
-| `Install-RouletteMod.ps1` | 安装/还原主脚本：自动找游戏、内容识别、备份管理。**单文件即可独立使用** |
+| `Install-RouletteMod.ps1` | 安装/还原主脚本：自动找游戏目录、内容识别、备份管理。**单文件即可独立使用** |
 | `Patch-Roulette.ps1` | 通用补丁器，可指定任意倍率：`-RedBlackMultiplier 20 -GreenMultiplier 35` |
-| `Assembly-CSharp.patched.dll` | 已打补丁并验证过的完整 DLL（v2，哈希 `6F0E3DD1…EFC8`）⚠️ 仅限本版本，别外发 |
-| `Assembly-CSharp.original.dll` | v2 原版备份（哈希 `E3EC0BEF…84B1`）⚠️ 仅限本版本，别外发 |
-| `ServerRouletteResult.il` | v2 原版目标方法的 149 字节 IL（十六进制） |
-| `ServerRouletteResult.patched.il` | v2 打补丁后同一方法的 149 字节 IL，可逐字节对照 |
+| `使用说明-给朋友.txt` | 面向非技术用户的说明（也打进分享包） |
+| `分享包-HowToFish轮盘赌20x/` | 上面 5 个文件的「直接转发」副本，发给朋友用这个 |
 | `ildump.py` | 自建 .NET 元数据 + IL 解析器（纯 Python，只读） |
 | `cmpver.py` | 版本对比工具：判定游戏更新有没有动赌场代码 |
 | `verifypatch.py` | 补丁自检：反汇编 + 分支目标 + 栈深数据流 + maxstack + 倍率取值 |
-| `v2_vs_v1_diff.txt` | v1 ↔ v2 全程序集对比报告 |
-| `v2_CasinoManager.txt` 等 `v2_*.txt` | v2 赌场相关类反汇编 |
-| `out_*.txt` | v1 时期的反汇编（保留作对照） |
-| `archive-v1-870400/` | v1 的原始/补丁 DLL 与 IL 参考 |
+| `ServerRouletteResult.il` | v2 原版目标方法的 149 字节 IL（十六进制） |
+| `ServerRouletteResult.patched.il` | v2 打补丁后同一方法的 149 字节 IL，可逐字节对照 |
+| `轮盘赌-押注颜色与历史结果影响分析.md` | 代码级取证：押注色不影响开奖、上局结果不影响下局 |
+| `.gitignore` | 挡住游戏 DLL，防止误提交 |
+
+**只在本地生成 / 存档、不进仓库的文件**（已被 `.gitignore` 覆盖）：
+
+| 文件 | 说明 |
+|---|---|
+| `Assembly-CSharp.original.dll` / `Assembly-CSharp.patched.dll` | **游戏本体程序集**，版权属于 Dazed Games，⚠️ 不要外发、不要提交 |
+| `Assembly-CSharp.dll.bak` | 安装脚本在游戏目录生成的原版备份（游戏更新后会自动归档成 `.bak.old-<哈希>`） |
+| `archive-v1-870400/` | v1 的 DLL 与 IL 参考（本地存档） |
+| `v2_*.txt` / `out_*.txt` | 反汇编 dump（本地分析用，体积大） |
+| `HowToFish-轮盘赌20x-分享包.zip` | 构建产物，可由 `分享包-HowToFish轮盘赌20x/` 重新打包 |
 
 
 ---

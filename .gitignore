@@ -1,0 +1,33 @@
+# ============================================================
+#  《How to Fish》游戏本体程序集 —— 绝对不要提交
+#  它们是 Dazed Games 的版权作品，本仓库只分发「补丁脚本」，
+#  不分发任何游戏文件。提交上去可能被 DMCA 下架。
+# ============================================================
+Assembly-CSharp.dll
+Assembly-CSharp*.dll
+Assembly-CSharp*.dll.bak
+*.dll
+*.dll.bak
+archive-v1-870400/
+
+# ------------------------------------------------------------
+#  这条特别重要：
+#  Install-RouletteMod.ps1 会在「脚本所在目录」留一份原版 DLL
+#  （Assembly-CSharp.original.dll，约 900 KB 的游戏程序集）。
+#  只要有人在仓库目录里跑过一次安装脚本，这里就会冒出一个
+#  受版权保护的二进制文件 —— 有了这条规则，git add . 也不会
+#  把它误传上去。
+# ------------------------------------------------------------
+Assembly-CSharp.original.dll
+Assembly-CSharp.patched.dll
+*.zip
+
+# 分析/调试产生的临时文件
+_py_probe.txt
+_t.txt
+_probe.py
+
+# 操作系统杂物
+Thumbs.db
+desktop.ini
+.DS_Store
